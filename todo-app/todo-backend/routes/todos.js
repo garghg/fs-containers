@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
     done: false
   })
   res.send(todo);
-  const prev = parseInt(await get("added_todos"))
+  const prev = parseInt(await get("added_todos")) || 0
   await set("added_todos", prev + 1)
 });
 
