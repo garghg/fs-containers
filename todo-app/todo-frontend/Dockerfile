@@ -1,4 +1,4 @@
-FROM node:24 AS build-stage
+FROM node:24 AS build
 WORKDIR /usr/src/app
 COPY . .
 
@@ -7,6 +7,8 @@ ENV VITE_BACKEND_URL=http://localhost:3000
 RUN npm ci
 RUN npm run build
 
-FROM nginx:alpine
+FROM build AS test
+RUN npm test
 
-COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
+FROM nginx:alpine
+COPY --from=test /usr/src/app/dist /usr/share/nginx/html
