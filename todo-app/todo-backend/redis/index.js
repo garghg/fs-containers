@@ -18,10 +18,14 @@ if (!REDIS_URL) {
 
   client.on('error', (err) => console.log('Redis Client Error', err))
   
-  client.connect().then(() => {
+  client.connect().then(async () => {
     console.log('Connected to Redis')
+    const existing = await client.get("added_todos")
+    if (!existing) {
+      await client.set("added_todos", "0")
+    }
   })
-    
+
   get = (...args) => client.get(...args)
   set = (...args) => client.set(...args)
 }
