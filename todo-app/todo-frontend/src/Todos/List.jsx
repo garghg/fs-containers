@@ -13,14 +13,15 @@ const TodoList = ({ todos, deleteTodo, completeTodo }) => {
   return (
     <>
       {todos
-        .map((todo) => {
+        .map((todo) => (
           <Todo
+            key={todo._id}
             todo={todo}
             onClickComplete={onClickComplete}
-            onClickDelete={onClickComplete}
-          />;
-        })
-        .reduce((acc, cur) => [...acc, <hr />, cur], [])}
+            onClickDelete={onClickDelete}
+          />
+        ))
+        .reduce((acc, cur, i) => [...acc, <hr key={`hr-${i}`} />, cur], [])}
     </>
   );
 };
